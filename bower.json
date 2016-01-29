@@ -1,0 +1,19 @@
+{
+  "name": "startup",
+  "description": "start up",
+  "main": "index.js",
+  "authors": [
+    "nhatphan1988 <thamtudethuong@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}
