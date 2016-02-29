@@ -1,0 +1,23 @@
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #333; }
+
+.facebook-icon {
+  margin: 8px 5px 8px 5px;
+  height: 34px;
+  width: 34px; }
+
+.form-group .search-icon {
+  top: 0;
+  right: 0;
+  margin-top: 8px;
+  position: absolute; }
+
+.form-group span {
+  font-size: 20px;
+  padding: 6px;
+  height: 34px;
+  color: #ddd; }
+
+.form-group span:hover {
+  color: black; }

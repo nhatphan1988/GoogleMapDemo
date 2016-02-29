@@ -1,43 +1,138 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+    <!DOCTYPE html>
+    <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> 
+    <html lang="en" class="no-js"> <!--<![endif]-->
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>My AngularJS App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+        <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"> 
+        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="css/lib.css">
 
-  <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+        <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+        <script data-main="requirejs/main" src="bower_components/requirejs/require.js"></script>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
-</body>
-</html>
+        <style>
+          html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
+          #map {
+            height: 100%;
+          }
+        </style>
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <style>
+          #locationField, #controls {
+            position: relative;
+            width: 480px;
+          }
+          #autocomplete {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 99%;
+          }
+          .label {
+            text-align: right;
+            font-weight: bold;
+            width: 100px;
+            color: #303030;
+          }
+          #address {
+            border: 1px solid #000090;
+            background-color: #f0f0ff;
+            width: 480px;
+            padding-right: 2px;
+          }
+          #address td {
+            font-size: 10pt;
+          }
+          .field {
+            width: 99%;
+          }
+          .slimField {
+            width: 80px;
+          }
+          .wideField {
+            width: 200px;
+          }
+          #locationField {
+            height: 20px;
+            margin-bottom: 2px;
+          }
+        </style>
+      </head>
+      <body>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
+              <ul class="nav navbar-nav">
+                <li><a href="~/Home/Index">Trang chủ</a></li>
+                <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Thực đơn<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="https://getbootstrap.com/examples/navbar/#">Đồ ăn</a></li>
+                    <li><a href="https://getbootstrap.com/examples/navbar/#">Thức uống</a></li>
+                  </ul>
+                </li>
+                <li><a href="~/About/About">Liên hệ</a></li>
+                <li><a href="~/About/Difference">Khác biệt</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <form class="navbar-form navbar-right" role="search" action="~/Menus/SearchMenuName" method="post" id="searchFormTop">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Search" name="menuName">
+                      <a class="search-icon" onclick="$('#searchFormTop').submit()">
+                        <span class="fa fa-search"></span>
+                      </a>
+                    </div>
+                  </form>
+                </li>
+                <li>
+                  <img src="./img/facebook_24.png" class="facebook-icon">  
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container-fluid -->
+        </nav>
+        <ul class="menu">
+          <li><a href="#/view1">view1</a></li>
+          <li><a href="#/view2">view2</a></li>
+        </ul>
+
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div ng-view></div>
+
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjjkgkGLrrIHPBnHgtYB29fJZNqC5bmlM&libraries=places&signed_in=true"></script>
+
+      </body>
+    </html>
