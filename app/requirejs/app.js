@@ -1,7 +1,7 @@
 'use strict';
 
-define(['angularAMD','view1','view2','angular-route'], function (angularAMD) {
-    // Declare app level module which depends on views, and components
+define(['angularAMD','view1','view2'], function (angularAMD) {
+
 	var app=angular.module('myApp', [
 		'ngRoute',
 		'myApp.view1',
