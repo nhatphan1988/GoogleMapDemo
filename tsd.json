@@ -13,6 +13,9 @@
     },
     "googlemaps/google.maps.d.ts": {
       "commit": "163a4277199c3d896d9efffe24ea84c85f55c8ac"
+    },
+    "angularjs/angular.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
     }
   }
 }
