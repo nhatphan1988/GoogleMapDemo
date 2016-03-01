@@ -3,8 +3,10 @@
 requirejs.config(
 	{
 		paths:{
+			'angular': '../bower_components/angular/angular',
         	'angularAMD': '../bower_components/angularAMD/angularAMD',
-        	'view1':'../pg-01/view1',
+        	'google-search':'../pg-google-search/google-search',
+        	'helper':'helper',
         	'view2':'../pg-02/view2'
 		},
     	
@@ -15,8 +17,5 @@ requirejs.config(
 
 require([],
 	function(){
-
 	}
-
-
 )

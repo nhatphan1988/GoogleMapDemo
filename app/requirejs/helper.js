@@ -1,5 +1,5 @@
-'use strict';
-define(function () {
+define(["require", "exports"], function (require, exports) {
+    'use strict';
     var Helper = (function () {
         function Helper() {
             this.componentForm = {
@@ -154,6 +154,6 @@ define(function () {
         };
         return Helper;
     })();
-    return Helper;
+    exports.Helper = Helper;
 });
-//# sourceMappingURL=helper.js.map
+//# sourceMappingURL=Helper.js.map
