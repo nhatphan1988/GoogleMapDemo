@@ -1,4 +1,3 @@
-import  "../pg-google-search/google-search";
 import  "../pg-02/view2";
 import {AppController}  from "./app.controller";
 import {GoogleSearchController} from "../pg-google-search/google-search.controller";

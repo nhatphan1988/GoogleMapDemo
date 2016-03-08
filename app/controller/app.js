@@ -1,4 +1,4 @@
-define(["require", "exports", "./app.controller", "../pg-google-search/google-search.controller", "./app.route-provider", "../pg-google-search/google-search.route-provider", "../pg-google-search/google-search", "../pg-02/view2"], function (require, exports, app_controller_1, google_search_controller_1, app_route_provider_1, google_search_route_provider_1) {
+define(["require", "exports", "./app.controller", "../pg-google-search/google-search.controller", "./app.route-provider", "../pg-google-search/google-search.route-provider", "../pg-02/view2"], function (require, exports, app_controller_1, google_search_controller_1, app_route_provider_1, google_search_route_provider_1) {
     var App = (function () {
         function App() {
         }
