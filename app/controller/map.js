@@ -14,8 +14,15 @@ define(["require", "exports"], function (require, exports) {
                 location: pyrmont,
                 radius: 500,
                 types: ['store']
-            }, this.callback.bind(this));
+            }, this.createMarkers.bind(this));
         }
+        Map.prototype.createMarkers = function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    this.createMarker(results[i]);
+                }
+            }
+        };
         Object.defineProperty(Map.prototype, "Map", {
             get: function () {
                 return this.map;
@@ -23,13 +30,6 @@ define(["require", "exports"], function (require, exports) {
             enumerable: true,
             configurable: true
         });
-        Map.prototype.callback = function (results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
-                    this.createMarker(results[i]);
-                }
-            }
-        };
         Map.prototype.createMarker = function (place) {
             var placeLoc = place.geometry.location;
             var image = {

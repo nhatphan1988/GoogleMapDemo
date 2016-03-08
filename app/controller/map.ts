@@ -6,11 +6,6 @@ export class Map {
 	infowindow: any;
 	componentForm: any;
 
-	get Map()
-	{
-		return this.map;
-	}
-
 	constructor(element:any) {
 		var pyrmont: any = { lat: -33.867, lng: 151.195 };
 
@@ -29,15 +24,19 @@ export class Map {
 			location: pyrmont,
 			radius: 500,
 			types: ['store']
-		}, this.callback.bind(this));
+		}, this.createMarkers.bind(this));
 	}
     
-	callback(results, status) {
+	createMarkers(results, status) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			for (var i = 0; i < results.length; i++) {
 				this.createMarker(results[i]);
 			}
 		}
+	}
+
+	get Map() {
+		return this.map;
 	}
 
 	createMarker(place) {

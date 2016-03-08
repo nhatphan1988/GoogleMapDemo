@@ -5,210 +5,122 @@ import { Autocomplete }  from '../controller/autocomplete';
 import { CalculateRoute} from '../controller/calculateroute';
 
 export class GoogleSearchController {
-	static map: Map;
-	static autocomplete: Autocomplete;
 
-	public static register(app: angular.IModule) {
-		
-		app.controller('GoogleSearchCtrl', ["$scope", ($scope) => {
+	public static $inject = ["$scope"];
+	map: Map;
+	autocomplete: Autocomplete;
+	componentForm = {
+		street_number: 'short_name',
+		route: 'long_name',
+		locality: 'long_name',
+		administrative_area_level_1: 'short_name',
+		country: 'long_name',
+		postal_code: 'short_name'
+	};
 
-			$scope.from = "";
-			$scope.to = "";
+	constructor(private $scope){
+		$scope.from = "";
+		$scope.to = "";
 
-			this.map = new Map(<HTMLInputElement>document.getElementById('googleMap'));
-			this.autocomplete = new Autocomplete();
-			this.autocomplete.addListener('place_changed', () => {
-				var place = this.autocomplete.getPlace();
-				if (place.geometry) {
-					this.map.panTo(place.geometry.location);
-					this.map.setZoom(5);
-					this.autocomplete.fillInAddress();
-				} else {
-					(<HTMLInputElement>document.getElementById('autocomplete')).placeholder = 'Enter a city';
-				}
-			});
+		this.map = new Map(<HTMLInputElement>document.getElementById('googleMap'));
+		this.autocomplete = new Autocomplete(<HTMLInputElement>document.getElementById('autocomplete'));
 
-			$scope.geolocate = () => {
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition((position) => {
-						var geolocation: any;
-						geolocation = {
-							lat: position.coords.latitude,
-							lng: position.coords.longitude
-						};
+		this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
 
-						var circle = new google.maps.Circle({
-							center: geolocation,
-							radius: position.coords.accuracy
-						});
-						this.autocomplete.setBounds(circle.getBounds());
-					});
-				}
-			};
+		$scope.geolocate = this.locateGeo.bind(this);
 
-			$scope.getCurrentPosition = function($event) {
-				$event.preventDefault();
-				var addressId = $event.target.id.substring(0, $event.target.id.indexOf("-"));
+		$scope.getCurrentPosition = this.getCurrentPosition.bind(this);
 
-				navigator.geolocation.getCurrentPosition(
-					function(position) {
-						var geocoder = new google.maps.Geocoder();
-						geocoder.geocode(
-							{
-								"location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-							},
-							function(results, status) {
-								if (status == google.maps.GeocoderStatus.OK)
-									$scope[addressId] = results[0].formatted_address;
-								$scope.$apply();
-								// else
-								// 	$("#error").append("Unable to retrieve your address<br />");
-							});
-					},
-					function(positionError) {
-						// $("#error").append("Error: " + positionError.message + "<br />");
-					},
-					{
-						enableHighAccuracy: true,
-						timeout: 10 * 1000 // 10 seconds
-					});
-			}
+		$scope.calculateRoute = ($event) => {
+			$event.preventDefault();
+			CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
 
-			$scope.calculateRoute = ($event) => {
-				$event.preventDefault();
-				CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
-
-			}
-
-			// var user = $userResource.query({}, function(data) {
-			// 	$scope.users = data;
-			// 	console.log("success.");
-			// });
-		}]);
+		}
 	}
 
+	private handlePlaceChanged(){
+		var place = this.autocomplete.getPlace();
+		if (place.geometry) {
+			this.map.panTo(place.geometry.location);
+			this.map.setZoom(5);
+			this.fillInAddress.bind(this)();
+		} else {
+			(<HTMLInputElement>document.getElementById('autocomplete')).placeholder = 'Enter a city';
+		}
+	}
 
-}
+	private locateGeo(){
+		if (!navigator.geolocation) {
+			return;
+		}
 
+		navigator.geolocation.getCurrentPosition((position) => {
+			var geolocation: any;
+			geolocation = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
 
-// /// <reference path="../../typings/tsd.d.ts" />
+			var circle = new google.maps.Circle({
+				center: geolocation,
+				radius: position.coords.accuracy
+			});
+			this.autocomplete.setBounds(circle.getBounds());
+		});		
+	}
 
-// import { Map}  from '../controller/map';
-// import { Autocomplete }  from '../controller/autocomplete';
-// import { CalculateRoute} from '../controller/calculateroute';
+	private handlePositionFound(position, addressId){
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({ "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude) },
+		(results, status) => {
+			if (status == google.maps.GeocoderStatus.OK) {
+				this.$scope[addressId] = results[0].formatted_address;
+				this.$scope.$apply();
+			}
+		});
 
-// export class GoogleSearchController
-// {
-// 	map: Map;
-// 	autocomplete: Autocomplete;
+	}
 
-// 	constructor()
-// 	{
-// 		angular.module('myApp.google-search', ['ngRoute', 'ngResource'])
+	private getCurrentPosition($event){
+		$event.preventDefault();
+		var addressId = $event.target.id.substring(0, $event.target.id.indexOf("-"));
 
-// 			.config(['$routeProvider', function($routeProvider) {
-// 				$routeProvider.when('/google-search', {
-// 					templateUrl: 'pg-google-search/google-search.html',
-// 					controller: 'GoogleSearchCtrl'
-// 				});
-// 			}])
-// 			.directive('myMap', () => {
-// 				return {
-// 					template: '<div id="myMap" style="width:500px;height:380px;"></div>',
-// 					link: (scope, element, attrs) => {
-// 						this.map = new Map(
-// 							element.find('#myMap')[0]);
-// 						// this.registerCalculateRouteEvent();
-// 					}
-// 				};
-// 			})
-// 			.factory('$userResource', ['$resource', function($resource) {
-// 				return $resource('http://localhost:42217/api/Users/:id', null,
-// 					{
-// 					});
-// 			}])
-// 			.controller('GoogleSearchCtrl', ["$scope", '$userResource', ($scope, $userResource) => {
-
-// 				$scope.from = "";
-// 				$scope.to = "";
-
-				
-
-// 				this.autocomplete = new Autocomplete();
-// 				this.autocomplete.addListener('place_changed', () => {
-// 					var place = this.autocomplete.getPlace();
-// 					if (place.geometry) {
-// 						this.map.panTo(place.geometry.location);
-// 						this.map.setZoom(5);
-// 						this.autocomplete.fillInAddress();
-// 					} else {
-// 						(<HTMLInputElement>document.getElementById('autocomplete')).placeholder = 'Enter a city';
-// 					}
-// 				});
-
-// 				$scope.geolocate = () => {
-// 					if (navigator.geolocation) {
-// 						navigator.geolocation.getCurrentPosition((position)=> {
-// 							var geolocation: any;
-// 							geolocation = {
-// 								lat: position.coords.latitude,
-// 								lng: position.coords.longitude
-// 							};
-
-// 							var circle = new google.maps.Circle({
-// 								center: geolocation,
-// 								radius: position.coords.accuracy
-// 							});
-// 							this.autocomplete.setBounds(circle.getBounds());
-// 						});
-// 					}
-// 				};
-
-// 				$scope.getCurrentPosition = function ($event)
-// 				{
-// 					$event.preventDefault();
-// 					var addressId = $event.target.id.substring(0, $event.target.id.indexOf("-"));
-
-// 					navigator.geolocation.getCurrentPosition(
-// 						function(position) {
-// 							var geocoder = new google.maps.Geocoder();
-// 							geocoder.geocode(
-// 								{
-// 									"location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-// 								},
-// 								function(results, status) {
-// 									if (status == google.maps.GeocoderStatus.OK)
-// 										$scope[addressId]=results[0].formatted_address;
-// 										$scope.$apply();
-// 									// else
-// 									// 	$("#error").append("Unable to retrieve your address<br />");
-// 								});
-// 						},
-// 						function(positionError) {
-// 							// $("#error").append("Error: " + positionError.message + "<br />");
-// 						},
-// 						{
-// 							enableHighAccuracy: true,
-// 							timeout: 10 * 1000 // 10 seconds
-// 						});
-// 				}
-
-// 				$scope.calculateRoute = ($event) =>
-// 				{
-// 					$event.preventDefault();
-// 					CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
-
-// 				}
-
-// 				var user = $userResource.query({}, function(data) {
-// 					$scope.users = data;
-// 					console.log("success.");
-// 				});
-
-
-// 			}]);	
-// 	}
+		navigator.geolocation.getCurrentPosition( position => {
+			this.handlePositionFound(position, addressId);
+		},
+		(positionError) => {
+			
+		},
+		{
+			enableHighAccuracy: true,
+			timeout: 10 * 1000 // 10 seconds
+		});
+	}
 
 	
-// }
+	private fillInAddress() {
+		// Get the place details from the autocomplete object.
+		var place = this.autocomplete.getPlace();
+
+		for (var component in this.componentForm) {
+			(<HTMLInputElement>document.getElementById(component)).value = '';
+			(<HTMLInputElement>document.getElementById(component)).disabled = false;
+		}
+
+		// Get each component of the address from the place details
+		// and fill the corresponding field on the form.
+		this.fillAddressResultToView(place);
+	}
+
+	private fillAddressResultToView(place){
+		for (var i = 0; i < place.address_components.length; i++) {
+			var addressType = place.address_components[i].types[0];
+			if (this.componentForm[addressType]) {
+				var val = place.address_components[i][this.componentForm[addressType]];
+				(<HTMLInputElement>document.getElementById(addressType)).value = val;
+			}
+		}
+	}
+}
+
 

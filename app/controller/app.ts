@@ -14,7 +14,8 @@ export class App
 		])
 		AppController.register(app);
 		AppRouteProvider.register(app);
-		GoogleSearchController.register(app);
+		app.controller('GoogleSearchCtrl', GoogleSearchController)
+		// GoogleSearchController.register(app);
 		GoogleSearchRouteProvider.register(app);
 
 		angular.element(document).ready(function() {
