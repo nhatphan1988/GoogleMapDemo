@@ -1,12 +1,13 @@
 /// <reference path="../../typings/tsd.d.ts" />
 'use strict';
 
-export class Autocomplete {
-	autocomplete: any;
+export class Autocomplete{
+	autocomplete: google.maps.places.Autocomplete;
 	componentForm: any;
-	map: any;
+    infowindow: any;
+    onPlaceChanged: Function;
 
-	contructor() {
+	constructor() {
 		this.componentForm = {
 			street_number: 'short_name',
 			route: 'long_name',
@@ -16,28 +17,27 @@ export class Autocomplete {
 			postal_code: 'short_name'
 		};
 
-	}
-
-	initAutocomplete() {
-		// Create the autocomplete object, restricting the search to geographical
-		// location types.
 		this.autocomplete = new google.maps.places.Autocomplete(
 			(<HTMLInputElement>document.getElementById('autocomplete')),
-			{ types: ['geocode'] });
-
-		this.autocomplete.addListener('place_changed', this.onPlaceChanged.bind(this));
+			{ types: ['geocode'] });	
 	}
 
-	onPlaceChanged() {
-		var place = this.autocomplete.getPlace(); if (place.geometry) {
-			this.map.panTo(place.geometry.location);
-			this.map.setZoom(5);
-			this.fillInAddress();
-		} else {
-			(<HTMLInputElement>document.getElementById('autocomplete')).placeholder = 'Enter a city';
-		}
+	addListener(eventName: string, handler: (...args: any[]) => void): google.maps.MapsEventListener
+	{
+		return this.autocomplete.addListener(eventName, handler);
 	}
 
+    
+    getPlace()
+    {
+		return this.autocomplete.getPlace();
+    }
+
+    setBounds(latLngBound:google.maps.LatLngBounds)
+    {
+        this.autocomplete.setBounds(latLngBound);
+    }
+    
 	fillInAddress() {
 		// Get the place details from the autocomplete object.
 		var place = this.autocomplete.getPlace();
@@ -58,5 +58,3 @@ export class Autocomplete {
 		}
 	}
 }
-
-// export = Autocomplete;

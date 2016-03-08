@@ -1,0 +1,1 @@
+{"version":3,"file":"app.controller.js","sourceRoot":"","sources":["app.controller.ts"],"names":["AppController","AppController.constructor","AppController.register"],"mappings":";IAAA;QAAAA;QAKAC,CAACA;QAJcD,sBAAQA,GAAtBA,UAAuBA,GAAmBA;YACzCE,GAAGA,CAACA,UAAUA,CAACA,cAAcA,EAACA;YAC9B,CAAC,CAACA,CAAAA;QACHA,CAACA;QACFF,oBAACA;IAADA,CAACA,AALD,IAKC;IALY,qBAAa,gBAKzB,CAAA"}

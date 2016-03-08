@@ -1,4 +1,4 @@
-define(['angularAMD'], function (angularAMD) {
+define(function () {
     // Declare app level module which depends on views, and components
     angular.module('myApp.view2', ['ngRoute'])
 	.config(['$routeProvider', function($routeProvider) {

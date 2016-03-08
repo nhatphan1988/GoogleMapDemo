@@ -2,8 +2,6 @@ define(["require", "exports"], function (require, exports) {
     'use strict';
     var Autocomplete = (function () {
         function Autocomplete() {
-        }
-        Autocomplete.prototype.contructor = function () {
             this.componentForm = {
                 street_number: 'short_name',
                 route: 'long_name',
@@ -12,21 +10,16 @@ define(["require", "exports"], function (require, exports) {
                 country: 'long_name',
                 postal_code: 'short_name'
             };
-        };
-        Autocomplete.prototype.initAutocomplete = function () {
             this.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), { types: ['geocode'] });
-            this.autocomplete.addListener('place_changed', this.onPlaceChanged.bind(this));
+        }
+        Autocomplete.prototype.addListener = function (eventName, handler) {
+            return this.autocomplete.addListener(eventName, handler);
         };
-        Autocomplete.prototype.onPlaceChanged = function () {
-            var place = this.autocomplete.getPlace();
-            if (place.geometry) {
-                this.map.panTo(place.geometry.location);
-                this.map.setZoom(5);
-                this.fillInAddress();
-            }
-            else {
-                document.getElementById('autocomplete').placeholder = 'Enter a city';
-            }
+        Autocomplete.prototype.getPlace = function () {
+            return this.autocomplete.getPlace();
+        };
+        Autocomplete.prototype.setBounds = function (latLngBound) {
+            this.autocomplete.setBounds(latLngBound);
         };
         Autocomplete.prototype.fillInAddress = function () {
             var place = this.autocomplete.getPlace();
@@ -46,4 +39,4 @@ define(["require", "exports"], function (require, exports) {
     })();
     exports.Autocomplete = Autocomplete;
 });
-//# sourceMappingURL=Autocomplete.js.map
+//# sourceMappingURL=autocomplete.js.map
