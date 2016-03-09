@@ -1,7 +1,6 @@
 export class AppRouteProvider {
-	public static register(app: angular.IModule) {
-		app.config(['$routeProvider', function($routeProvider) {
-			$routeProvider.otherwise({ redirectTo: '/google-search' });
-		}])
+	public static $inject = ["$routeProvider"];
+	public constructor($routeProvider) {	
+		$routeProvider.otherwise({ redirectTo: '/google-search' });
 	}
 }

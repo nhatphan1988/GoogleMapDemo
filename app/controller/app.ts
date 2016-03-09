@@ -4,23 +4,21 @@ import {GoogleSearchController} from "../pg-google-search/google-search.controll
 import {AppRouteProvider} from "./app.route-provider";
 import {GoogleSearchRouteProvider} from "../pg-google-search/google-search.route-provider";
 	
-export class App
-{
-    public static start()
-    {		
+export class App {
+    public static start() {
         var app = angular.module('myApp', [
 			'ngRoute',
 			'myApp.view2'
-		])
-		AppController.register(app);
-		AppRouteProvider.register(app);
-		app.controller('GoogleSearchCtrl', GoogleSearchController)
-		// GoogleSearchController.register(app);
-		GoogleSearchRouteProvider.register(app);
+		]);
+		app.controller('AppCtrl', AppController);
+		app.config(AppRouteProvider);
+		app.controller('GoogleSearchCtrl', GoogleSearchController);
+		app.config(GoogleSearchRouteProvider);
 
 		angular.element(document).ready(function() {
 			angular.bootstrap(document, ['myApp']);
-		});   
-    } 
+		});
+    }
 }
+
 

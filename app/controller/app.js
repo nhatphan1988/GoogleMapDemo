@@ -7,10 +7,10 @@ define(["require", "exports", "./app.controller", "../pg-google-search/google-se
                 'ngRoute',
                 'myApp.view2'
             ]);
-            app_controller_1.AppController.register(app);
-            app_route_provider_1.AppRouteProvider.register(app);
+            app.controller('AppCtrl', app_controller_1.AppController);
+            app.config(app_route_provider_1.AppRouteProvider);
             app.controller('GoogleSearchCtrl', google_search_controller_1.GoogleSearchController);
-            google_search_route_provider_1.GoogleSearchRouteProvider.register(app);
+            app.config(google_search_route_provider_1.GoogleSearchRouteProvider);
             angular.element(document).ready(function () {
                 angular.bootstrap(document, ['myApp']);
             });

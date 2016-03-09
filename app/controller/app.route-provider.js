@@ -1,12 +1,9 @@
 define(["require", "exports"], function (require, exports) {
     var AppRouteProvider = (function () {
-        function AppRouteProvider() {
+        function AppRouteProvider($routeProvider) {
+            $routeProvider.otherwise({ redirectTo: '/google-search' });
         }
-        AppRouteProvider.register = function (app) {
-            app.config(['$routeProvider', function ($routeProvider) {
-                    $routeProvider.otherwise({ redirectTo: '/google-search' });
-                }]);
-        };
+        AppRouteProvider.$inject = ["$routeProvider"];
         return AppRouteProvider;
     })();
     exports.AppRouteProvider = AppRouteProvider;
