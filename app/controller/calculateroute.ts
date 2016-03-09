@@ -21,8 +21,6 @@ export class CalculateRoute
 						directions: response
 					});
 				}
-				// else
-				// 	$("#error").append("Unable to retrieve your route<br />");
 			}
 		);
 	}
