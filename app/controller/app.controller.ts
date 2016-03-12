@@ -1,4 +1,4 @@
 export class AppController {
-	public constructor(){
+	public constructor() {
 	}
 }

@@ -6,15 +6,13 @@ export class Map {
 	infowindow: any;
 	componentForm: any;
 
-	constructor(element:any) {
+	public constructor(element:any) {
 		var pyrmont: any = { lat: -33.867, lng: 151.195 };
 
 		var mapProp = {
 			center: pyrmont,
 			zoom: 15,
 		};
-
-		// this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
 		this.map = new google.maps.Map(element, mapProp);
 
@@ -27,7 +25,7 @@ export class Map {
 		}, this.createMarkers.bind(this));
 	}
     
-	createMarkers(results, status) {
+	public createMarkers(results, status) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			for (var i = 0; i < results.length; i++) {
 				this.createMarker(results[i]);
@@ -35,11 +33,7 @@ export class Map {
 		}
 	}
 
-	get Map() {
-		return this.map;
-	}
-
-	createMarker(place) {
+	public createMarker(place) {
 		var placeLoc = place.geometry.location;
 		var image = {
 			url: place.icon,
@@ -61,30 +55,25 @@ export class Map {
 		});
 	}
 
-	panTo(latLng:google.maps.LatLng)
+	public panTo(latLng:google.maps.LatLng)
 	{
 		this.map.panTo(latLng)
 	}
 
-	setZoom(zoom:number)
+	public setZoom(zoom:number)
 	{
 		this.map.setZoom(zoom);
 	}
 
-	 //    private initMap() {
-
-
-	// 	// var cityCircle = new google.maps.Circle({
-	// 	// 	strokeColor: '#FF0000',
-	// 	// 	strokeOpacity: 0.8,
-	// 	// 	strokeWeight: 2,
-	// 	// 	fillColor: '#FF0000',
-	// 	// 	fillOpacity: 0.35,
-	// 	// 	map: this.map,
-	// 	// 	center: this.map.center,
-	// 	// 	radius: 500,
-	// 	// });
-	// }
+	public renderDirections(response, status)
+	{
+		if (status == google.maps.DirectionsStatus.OK) {
+			new google.maps.DirectionsRenderer({
+				map: this.map,
+				directions: response
+			});
+		}
+	}
 
 }
 

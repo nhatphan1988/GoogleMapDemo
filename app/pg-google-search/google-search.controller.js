@@ -1,7 +1,6 @@
-define(["require", "exports", '../controller/map', '../controller/autocomplete', '../controller/calculateroute'], function (require, exports, map_1, autocomplete_1, calculateroute_1) {
+define(["require", "exports", '../controller/autocomplete'], function (require, exports, autocomplete_1) {
     var GoogleSearchController = (function () {
         function GoogleSearchController($scope) {
-            var _this = this;
             this.$scope = $scope;
             this.componentForm = {
                 street_number: 'short_name',
@@ -11,23 +10,21 @@ define(["require", "exports", '../controller/map', '../controller/autocomplete',
                 country: 'long_name',
                 postal_code: 'short_name'
             };
-            $scope.from = "";
-            $scope.to = "";
-            this.map = new map_1.Map(document.getElementById('googleMap'));
+            $scope.route = {
+                from: '',
+                to: ''
+            };
             this.autocomplete = new autocomplete_1.Autocomplete(document.getElementById('autocomplete'));
             this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
             $scope.geolocate = this.locateGeo.bind(this);
             $scope.getCurrentPosition = this.getCurrentPosition.bind(this);
-            $scope.calculateRoute = function ($event) {
-                $event.preventDefault();
-                calculateroute_1.CalculateRoute.calculateRoute($scope.from, $scope.to, _this.map);
-            };
         }
         GoogleSearchController.prototype.handlePlaceChanged = function () {
             var place = this.autocomplete.getPlace();
             if (place.geometry) {
-                this.map.panTo(place.geometry.location);
-                this.map.setZoom(5);
+                this.$scope.center = place.geometry.location;
+                this.$scope.zoom = '15';
+                this.$scope.$apply();
                 this.fillInAddress.bind(this)();
             }
             else {
@@ -57,7 +54,7 @@ define(["require", "exports", '../controller/map', '../controller/autocomplete',
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({ "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude) }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    _this.$scope[addressId] = results[0].formatted_address;
+                    _this.$scope.route[addressId] = results[0].formatted_address;
                     _this.$scope.$apply();
                 }
             });

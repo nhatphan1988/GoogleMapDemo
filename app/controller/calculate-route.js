@@ -11,16 +11,11 @@ define(["require", "exports"], function (require, exports) {
                 travelMode: google.maps.TravelMode["DRIVING"]
             };
             directionsService.route(directionsRequest, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    new google.maps.DirectionsRenderer({
-                        map: map.Map,
-                        directions: response
-                    });
-                }
+                map.renderDirections(response, status);
             });
         };
         return CalculateRoute;
     })();
     exports.CalculateRoute = CalculateRoute;
 });
-//# sourceMappingURL=calculateroute.js.map
+//# sourceMappingURL=calculate-route.js.map

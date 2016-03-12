@@ -32,13 +32,14 @@ gulp.task('scripts', function() {
 gulp.task('server', function() {
 
   browserSync.init({
-          server: "./app"
+          server: "./app",
+          files:['./app/controller/*.*','./app/pg-*/*.*','./app/index.html','./app/controller/map/*.*']
       });
 
-  gulp.watch(['./app/pg-*/*.js'], ['concat js file in folder pg-*'])
-  gulp.watch(['./app/components/version/*.js'], ['concat js file in folder components'])
-  gulp.watch(['./app/*.js'], ['concat js file in folder app'])
-  gulp.watch(['./app/js/*.js'], ['concat js file in folder js'])
+  // gulp.watch(['./app/pg-*/*.js'], ['concat js file in folder pg-*'])
+  // gulp.watch(['./app/components/version/*.js'], ['concat js file in folder components'])
+  // gulp.watch(['./app/*.js'], ['concat js file in folder app'])
+  // gulp.watch(['./app/js/*.js'], ['concat js file in folder js'])
   gulp.watch(['./app/sass/*.sass'], ['compile sass'])
 });
 
@@ -49,21 +50,21 @@ gulp.task('concat js file in folder components', function() {
 });
 
 gulp.task('concat js file in folder app', function() {
-  	gulp.src('./app/*.js')
-  	.pipe(concat('app.js'))
-  	.pipe(gulp.dest('./app/js'))
-    .pipe(browserSync.stream());
+  	// gulp.src('./app/*.js')
+  	// .pipe(concat('app.js'))
+  	// .pipe(gulp.dest('./app/js'))
+   //  .pipe(browserSync.stream());
 });
 
 gulp.task('concat js file in folder js', function() {
-  	gulp.src('./app/js/*.js')
-  	// .pipe(uglify()).on('error', gutil.log)
-  	.pipe(concat('lib.js'))
-  	.pipe(rename({
-      	suffix: '.min'
-	}))
-  	.pipe(gulp.dest('./app/js/lib'))
-    .pipe(browserSync.stream());
+ //  	gulp.src('./app/js/*.js')
+ //  	// .pipe(uglify()).on('error', gutil.log)
+ //  	.pipe(concat('lib.js'))
+ //  	.pipe(rename({
+ //      	suffix: '.min'
+	// }))
+ //  	.pipe(gulp.dest('./app/js/lib'))
+ //    .pipe(browserSync.stream());
 });
 
 gulp.task('compile sass', function() {

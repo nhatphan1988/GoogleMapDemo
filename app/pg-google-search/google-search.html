@@ -36,20 +36,21 @@
         </table>
 
         <h1>Calculate your route</h1>
-        <form id="calculate-route" name="calculate-route" action="#" method="get" ng-submit="calculateRoute($event)" >
+        <form id="calculate-route" name="calculate-route" action="#" method="get">
           <label for="from">From:</label>
-          <input type="text" id="from" name="from" required="required" placeholder="An address" size="30" ng-model="from"/>
+          <input type="text" id="from" name="from" required="required" placeholder="An address" size="30" ng-model="route.from"/>
           <a id="from-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
           <br />
 
           <label for="to">To:</label>
-          <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" ng-model="to"/>
+          <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" ng-model="route.to"/>
           <a id="to-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
           <br />
-
-          <input type="submit"/>
+<!-- 
+          <input type="submit"/> -->
           <input type="reset" />
         </form>
         <p id="error" ng-bind="error"></p>
-<!--         <div id="googleMap" style="width:500px;height:380px;"></div> -->
-        <div id="googleMap" style="width:500px;height:380px;"></div>
+        <!-- <div id="googleMap" style="width:500px;height:380px;"></div> -->
+        <google-map zoom="zoom" route='route' center='center'>
+        </google-map>

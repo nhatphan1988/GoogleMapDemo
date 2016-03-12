@@ -14,13 +14,8 @@ export class CalculateRoute
 		};
 		directionsService.route(
 			directionsRequest,
-			(response, status) => {
-				if (status == google.maps.DirectionsStatus.OK) {
-					new google.maps.DirectionsRenderer({
-						map: map.Map,
-						directions: response
-					});
-				}
+			(response, status)=>{
+				map.renderDirections(response, status);
 			}
 		);
 	}

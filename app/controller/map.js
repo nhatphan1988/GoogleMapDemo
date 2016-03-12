@@ -23,13 +23,6 @@ define(["require", "exports"], function (require, exports) {
                 }
             }
         };
-        Object.defineProperty(Map.prototype, "Map", {
-            get: function () {
-                return this.map;
-            },
-            enumerable: true,
-            configurable: true
-        });
         Map.prototype.createMarker = function (place) {
             var placeLoc = place.geometry.location;
             var image = {
@@ -55,6 +48,14 @@ define(["require", "exports"], function (require, exports) {
         };
         Map.prototype.setZoom = function (zoom) {
             this.map.setZoom(zoom);
+        };
+        Map.prototype.renderDirections = function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                new google.maps.DirectionsRenderer({
+                    map: this.map,
+                    directions: response
+                });
+            }
         };
         return Map;
     })();

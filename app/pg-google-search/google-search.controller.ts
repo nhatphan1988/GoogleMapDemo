@@ -2,7 +2,7 @@
 
 import { Map}  from '../controller/map';
 import { Autocomplete }  from '../controller/autocomplete';
-import { CalculateRoute} from '../controller/calculateroute';
+import { CalculateRoute} from '../controller/calculate-route';
 
 export class GoogleSearchController {
 
@@ -18,11 +18,12 @@ export class GoogleSearchController {
 		postal_code: 'short_name'
 	};
 
-	constructor(private $scope){
-		$scope.from = "";
-		$scope.to = "";
-
-		this.map = new Map(<HTMLInputElement>document.getElementById('googleMap'));
+	constructor(private $scope) {
+		$scope.route = {
+			from: '',
+			to: ''
+		};
+		// this.map = new Map(<HTMLInputElement>document.getElementById('googleMap'));
 		this.autocomplete = new Autocomplete(<HTMLInputElement>document.getElementById('autocomplete'));
 
 		this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
@@ -31,25 +32,28 @@ export class GoogleSearchController {
 
 		$scope.getCurrentPosition = this.getCurrentPosition.bind(this);
 
-		$scope.calculateRoute = ($event) => {
-			$event.preventDefault();
-			CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
+		// $scope.calculateRoute = ($event) => {
+		// 	$event.preventDefault();
+		// 	CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
 
-		}
+		// }
 	}
 
-	private handlePlaceChanged(){
+	private handlePlaceChanged() {
 		var place = this.autocomplete.getPlace();
 		if (place.geometry) {
-			this.map.panTo(place.geometry.location);
-			this.map.setZoom(5);
+			// this.map.panTo(place.geometry.location);
+			//this.map.setZoom(5);
+			this.$scope.center = place.geometry.location;
+			this.$scope.zoom = '15';
+			this.$scope.$apply();
 			this.fillInAddress.bind(this)();
 		} else {
 			(<HTMLInputElement>document.getElementById('autocomplete')).placeholder = 'Enter a city';
 		}
 	}
 
-	private locateGeo(){
+	private locateGeo() {
 		if (!navigator.geolocation) {
 			return;
 		}
@@ -66,38 +70,38 @@ export class GoogleSearchController {
 				radius: position.coords.accuracy
 			});
 			this.autocomplete.setBounds(circle.getBounds());
-		});		
+		});
 	}
 
-	private handlePositionFound(position, addressId){
+	private handlePositionFound(position, addressId) {
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode({ "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude) },
-		(results, status) => {
-			if (status == google.maps.GeocoderStatus.OK) {
-				this.$scope[addressId] = results[0].formatted_address;
-				this.$scope.$apply();
-			}
-		});
+			(results, status) => {
+				if (status == google.maps.GeocoderStatus.OK) {
+					this.$scope.route[addressId] = results[0].formatted_address;
+					this.$scope.$apply();
+				}
+			});
 
 	}
 
-	private getCurrentPosition($event){
+	private getCurrentPosition($event) {
 		$event.preventDefault();
 		var addressId = $event.target.id.substring(0, $event.target.id.indexOf("-"));
 
-		navigator.geolocation.getCurrentPosition( position => {
+		navigator.geolocation.getCurrentPosition(position => {
 			this.handlePositionFound(position, addressId);
 		},
-		(positionError) => {
-			
-		},
-		{
-			enableHighAccuracy: true,
-			timeout: 10 * 1000 // 10 seconds
-		});
+			(positionError) => {
+
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 10 * 1000 // 10 seconds
+			});
 	}
 
-	
+
 	private fillInAddress() {
 		// Get the place details from the autocomplete object.
 		var place = this.autocomplete.getPlace();
@@ -112,7 +116,7 @@ export class GoogleSearchController {
 		this.fillAddressResultToView(place);
 	}
 
-	private fillAddressResultToView(place){
+	private fillAddressResultToView(place) {
 		for (var i = 0; i < place.address_components.length; i++) {
 			var addressType = place.address_components[i].types[0];
 			if (this.componentForm[addressType]) {

@@ -7,6 +7,10 @@ define(function () {
 	    controller: 'View2Ctrl'
 	  });
 	}])
-	.controller('View2Ctrl', [function() {
+	.controller('View2Ctrl', ['$scope',function($scope) {
+		$scope.route ={
+			from:'332 Hougang Ave 5, Singapore 530332',
+			to:'335 Hougang Ave 5, Singapore 530332'
+		}
 	}]);
 });
