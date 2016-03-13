@@ -13,27 +13,22 @@ export class AppGoogleMapDirectiveController
 				return;
 			CalculateRoute.calculateRoute($scope.route.from, $scope.route.to, map);
 		}
-
 		$scope.$watch(
 			function() { return $scope.center },
 			function() {
 				if ($scope.center === undefined) return;
 				map.panTo($scope.center);
 			})
-
 		$scope.$watch(
 			function() { return $scope.zoom },
 			function() {
 				if ($scope.zoom === undefined) return;
 				map.setZoom(parseInt($scope.zoom));
 			})
-
 		$scope.$watch(function() { return $scope.route.to },
 			$scope.calculateRoute)
-
 		$scope.$watch(function() { return $scope.route.from },
 			$scope.calculateRoute)
-
 	}
 
 }
