@@ -1,55 +1,64 @@
-<h1>Calculate your route</h1>
-<form id="calculate-route" name="calculate-route" action="#" method="get">
-  <label for="from">From:</label>
-  <input type="text" id="from" name="from" required="required" placeholder="An address" size="30" ng-model="route.from"/>
-  <a id="from-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
-  <br />
+<div class="direction-search-box">
+<div class="calculate-route-box">
+  <h1>Calculate your route</h1>
+  <form id="calculate-route" name="calculate-route" action="#" method="get">
+    <label for="from">From:</label>
+    <input type="text" id="from" name="from" required="required" placeholder="An address" size="30" ng-model="route.from"/>
+    <a id="from-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
+    <br />
 
-  <label for="to">To:</label>
-  <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" ng-model="route.to"/>
-  <a id="to-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
-  <br />
-  <input type="reset" />
-</form>
-<p id="error" ng-bind="error"></p>
+    <label for="to">To:</label>
+    <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" ng-model="route.to"/>
+    <a id="to-link" href="#" ng-click="getCurrentPosition($event)">Get my position</a>
+    <br />
+    <input type="reset" />
+  </form>
+</div>
+  
+  <!-- <div class="form-search-address">
+      <div id="locationField">
+        <input id="autocomplete" placeholder="Enter your address" type="text" ng-focus="geolocate"></input>
+      </div>
+      <table id="address">
+        <tr>
+          <td class="label">Street address</td>
+          <td class="slimField"><input class="field" id="street_number"
+            disabled="true"></input>
+            </td>
+          <td class="wideField" colspan="2"><input class="field" id="route"
+            disabled="true"></input>
+            </td>
+        </tr>
+        <tr>
+          <td class="label">City</td>
+          <td class="wideField" colspan="3"><input class="field" id="locality"
+            disabled="true"></input></td>
+        </tr>
+        <tr>
+          <td class="label">State</td>
+          <td class="slimField"><input class="field"
+            id="administrative_area_level_1" disabled="true"></input></td>
+          <td class="label">Zip code</td>
+          <td class="wideField"><input class="field" id="postal_code"
+            disabled="true"></input></td>
+        </tr>
+        <tr>
+          <td class="label">Country</td>
+          <td class="wideField" colspan="3"><input class="field"
+            id="country" disabled="true"></input></td>
+        </tr>
+      </table>
+    </div> -->
+
+  <p id="error" ng-bind="error"></p>
+    
+</div>
+
+
 
 <div class = "container-google-map">
   <div class="form-google-map">
     <google-map zoom="zoom" route='route' center='center'>
     </google-map>
-  </div>
-  <div class="form-search-address">
-    <div id="locationField">
-      <input id="autocomplete" placeholder="Enter your address" type="text" ng-focus="geolocate"></input>
-    </div>
-    <table id="address">
-      <tr>
-        <td class="label">Street address</td>
-        <td class="slimField"><input class="field" id="street_number"
-          disabled="true"></input>
-          </td>
-        <td class="wideField" colspan="2"><input class="field" id="route"
-          disabled="true"></input>
-          </td>
-      </tr>
-      <tr>
-        <td class="label">City</td>
-        <td class="wideField" colspan="3"><input class="field" id="locality"
-          disabled="true"></input></td>
-      </tr>
-      <tr>
-        <td class="label">State</td>
-        <td class="slimField"><input class="field"
-          id="administrative_area_level_1" disabled="true"></input></td>
-        <td class="label">Zip code</td>
-        <td class="wideField"><input class="field" id="postal_code"
-          disabled="true"></input></td>
-      </tr>
-      <tr>
-        <td class="label">Country</td>
-        <td class="wideField" colspan="3"><input class="field"
-          id="country" disabled="true"></input></td>
-      </tr>
-    </table>
   </div>
 </div>

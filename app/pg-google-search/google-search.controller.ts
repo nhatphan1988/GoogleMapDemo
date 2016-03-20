@@ -23,7 +23,7 @@ export class GoogleSearchController {
 			from: '',
 			to: ''
 		};
-		// this.map = new Map(<HTMLInputElement>document.getElementById('googleMap'));
+		
 		this.autocomplete = new Autocomplete(<HTMLInputElement>document.getElementById('autocomplete'));
 
 		this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
@@ -31,12 +31,6 @@ export class GoogleSearchController {
 		$scope.geolocate = this.locateGeo.bind(this);
 
 		$scope.getCurrentPosition = this.getCurrentPosition.bind(this);
-
-		// $scope.calculateRoute = ($event) => {
-		// 	$event.preventDefault();
-		// 	CalculateRoute.calculateRoute($scope.from, $scope.to, this.map);
-
-		// }
 	}
 
 	private handlePlaceChanged() {
