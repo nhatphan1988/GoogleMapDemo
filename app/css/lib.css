@@ -92,7 +92,10 @@ body {
   margin-left: -8px;
   background: white;
   z-index: 20;
-  position: absolute; }
+  position: absolute;
+  transition: width 2s;
+  transition-timing-function: linear; }
+  
 
 .fullscreen {
   width: 100%;
